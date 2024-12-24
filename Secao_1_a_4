@@ -1,6 +1,5 @@
-//Este exercício, de forma simples, utiliza alguns conceitos da seção 1 
-//até a 4, do curso de C# - essencial do Professor Macoratti. Conceitos 
-//como: Classe, COnstrutor, metodo, valores, enumeração, 
+//Arquivo Program.cs
+
 
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
