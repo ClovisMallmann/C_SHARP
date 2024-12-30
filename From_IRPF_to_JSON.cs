@@ -3,7 +3,9 @@ using iText.Kernel.Pdf.Canvas.Parser;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using System;
 using System.Text;
-using System.Text.RegularExpressions; // Importe para usar Regex
+using System.Text.Json;
+using System.Text.RegularExpressions;
+using static System.Text.Json.JsonSerializer; // Importe para usar Regex
 
 public class LeitorPdf
 {
@@ -11,6 +13,7 @@ public class LeitorPdf
     {
         string caminhoDoPdf = "irpf.pdf";
         string textoDoPdf = LerPdf(caminhoDoPdf);
+        var ArquivoJson = @"Dados.json";
 
         if (textoDoPdf.StartsWith("Erro ao ler o PDF") || textoDoPdf == "Arquivo não encontrado.")
         {
@@ -47,11 +50,16 @@ public class LeitorPdf
 
             if(pessoa.Usuario != null && pessoa.Modelo != null) //verifica se os dois foram encontrados antes de imprimir.
             {
-                 Console.WriteLine($"As informações extraídas são: {pessoa.Usuario} e {pessoa.Modelo}");
+////////////////////// SERIALIZACAO para JSON - INICIO //////////////////////
+                string arquivoJSerializado = JsonSerializer.Serialize(pessoa);
+                File.WriteAllText(ArquivoJson, arquivoJSerializado);
+
+                 Console.WriteLine($"As informações extraídas e enviadas para JSON são: CPF: {pessoa.Usuario} e Modelo de Declaração: {pessoa.Modelo}");
+////////////////////// SERIALIZACAO para JSON - FIM //////////////////////
             }
         }
 
-        Console.ReadKey();
+        
     }
 
     public static string LerPdf(string caminhoArquivo)
